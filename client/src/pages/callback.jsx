@@ -1,17 +1,25 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Callback() {
+    let navigate = useNavigate();
 
-    // this is the callback page for spotify auth
-    // via be acting as the redirect URI
-    // will get the access token and refresh token
-    // cannot use localhost as the redirect URI address, need to use IPv4/v6 with port 3000
-    
+    const urlParams  = new URLSearchParams(window.location.search);
+    console.log("urlParams: "+urlParams);
+    const accessToken = urlParams.get('access_token');
+    console.log("access token callback: "+accessToken);
+    const refreshToken = urlParams.get('refresh_token');
+    console.log("refresh token callback: "+refreshToken);
+
+
+    useEffect(()=>{
+        navigate('/chat',{state:{accessToken, refreshToken}});
+    }, [navigate]);
 
     return(
         <div>
             <h2>Logging in...</h2>
-            {/* prolly might add a spinner here */}
         </div>
     );
 }
