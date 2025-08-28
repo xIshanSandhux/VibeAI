@@ -45,6 +45,7 @@ export const redirectToAuth = (req,res) =>{
     res.redirect(authUrl);
 }
 
+
 // Function: Callback from spotify login page
 export const callbackSpotify = async(req, res) =>{
     console.log("Callback function called");
@@ -79,6 +80,12 @@ export const callbackSpotify = async(req, res) =>{
           )
           .then((response) =>{
             console.log(response.data);
+            console.log('http://localhost:5173/auth-success?'+
+                querystring.stringify({
+                    access_token: response.data.access_token,
+                    refresh_token: response.data.refresh_token
+                })
+            );
             // res.cookie('access_token', response.data.access_token);
             // res.cookie('refresh_token', response.data.refresh_token);
             res.redirect('http://localhost:5173/auth-success?'+
