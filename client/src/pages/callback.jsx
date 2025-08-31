@@ -1,20 +1,26 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookie from 'js-cookie';
+
 
 function Callback() {
     let navigate = useNavigate();
 
+    // get access token and refresh token from url params
     const urlParams  = new URLSearchParams(window.location.search);
-    console.log("urlParams: "+urlParams);
+    
+    // setting access token cookies
     const accessToken = urlParams.get('access_token');
-    console.log("access token callback: "+accessToken);
+    Cookie.set('accessToken', accessToken);
+   
+    // setting refresh token cookies
     const refreshToken = urlParams.get('refresh_token');
-    console.log("refresh token callback: "+refreshToken);
+    Cookie.set('refreshToken', refreshToken);
 
-
+    // navigate to chat page
     useEffect(()=>{
-        navigate('/chat',{state:{accessToken, refreshToken}});
+        navigate('/chat');
     }, [navigate]);
 
     return(
